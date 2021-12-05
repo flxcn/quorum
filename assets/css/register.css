@@ -1,0 +1,12 @@
+.container {
+  max-width: 960px;
+}
+
+.btn-lg {
+  color: #fff;
+  text-shadow: none; /* Prevent inheritance from `body` */
+  background-color: #A41034;
+  border: .05rem solid #333;
+}
+
+.lh-condensed { line-height: 1.25; }
