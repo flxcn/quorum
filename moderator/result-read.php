@@ -1,97 +1,13 @@
 <!DOCTYPE html>
 <html>
-<link rel="icon" type="image/png" href="icon.png">
-<title>Vote Result</title>
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-        font-family: 'theaterbold', Arial, sans-serif;
-        font-weight:bolder;
-        /* line-height:200%; */
-        font-style:normal;
-        text-shadow:
-            -1.5px -1.5px 3px #000,
-            2px -2px 3px #000,
-            -2px 2px 3px #000,
-            3px 3px 0 #000;    
-        background-color: #ffeea9;
-        background-color: black;
-        word-spacing: 0.3em;
-        letter-spacing: 0.1em;
-        text-emphasis-color: black;
-    }
-
-    .bgimg {
-        background-image: url('background-3.jpeg');
-        height: 100%;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        position: relative;
-        color: white;
-        font-family: 'theaterbold', Arial, sans-serif;
-        font-weight:bolder;
-        font-style:normal;
-        font-size: 50px;
-    }
-
-    .middle {
-        position: absolute;
-        font-size: 0.70em;
-        top: 45%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: left;
-        letter-spacing: 0.1em;
-        margin-bottom: 1.5em;
-    }
-    
-    th {
-        text-align: left;
-    }
-
-    td {
-        padding-top: 0.1em;
-        padding-right: 0.4em;
-        padding-bottom: 0.1em;
-        text-align: center;
-    }
-
-    #time {
-        text-align: center;
-        word-spacing: 0.3em; 
-        letter-spacing: 0.1em;
-    }
-
-    #outcome {
-        text-align: center; 
-        word-spacing: 0.3em; 
-        color:white; 
-        /* background-color: green;  */
-        /* background-color: red;  */
-        text-shadow: none;
-    }
-
-    .logo {
-        /* text-shadow: none; */
-        position: absolute;
-        bottom: 0;
-        left: 75%;
-        font-family:-apple-system, 'Open Sans', 'Helvetica Neue', sans-serif;
-        background-image: linear-gradient(to bottom,#A41034,#a01e3e, #a36071);
-        /* background-image: linear-gradient(to bottom right, #A41034, white); */
-        background-color: #A41034;
-        font-size: 1em;
-        color: white;
-        padding-top: 0.75em;
-        padding-bottom: 0.75em;
-        padding-right: 0.5em;
-        padding-left: 0.5em;
-        margin: 1em;
-        text-decoration: none;
-    }
-</style>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Felix Chen">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>H-SPAN | Vote Tally</title>
+    <link href="../assets/css/hspan.css" rel="stylesheet">
+</head>
 <body>
     <div class="bgimg">
         <div class="middle">
@@ -99,7 +15,7 @@
 
             <table style="margin-top: 1.5em;">   
                 <tr style="margin-bottom: 0.75em;">
-                    <td>RES.</td>
+                    <td>ART.</td>
                     <td id="voteId">&nbsp;&nbsp;&nbsp;1028</td>
                 </tr>
 
@@ -132,11 +48,10 @@
                 TIME REMAINING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </p>
 
-            <p id="outcome">  
-            </p>
+            <p id="outcome"></p>
         </div>
         
-        <a href="results.html" class="logo">
+        <a href="results.php" class="logo">
             H<span style="font-size: 80%;">&#9642;</span>SPAN
         </a>
     </div>
