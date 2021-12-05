@@ -5,7 +5,7 @@ table_column    | data type
 delegate_id     | primary int(11) NOT NULL
 first_name      | varchar(50) NOT NULL 
 last_name       | varchar(50) NOT NULL
-caucus          | varchar(50) NOT NULL
+caucus_id       | int(11) NOT NULL
 username        | varchar(50) NOT NULL
 <!-- password        | varchar(250), NOT NULL -->
 is_enabled      | bool NOT NULL, default: TRUE
