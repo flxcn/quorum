@@ -81,7 +81,8 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
                         <small class="card-text text-muted"><?php echo $_SESSION["username"]; ?></small>
                         <hr>
                         <p class="card-text">Member of the <b><?php echo $_SESSION["caucus_title"]; ?> Caucus</b></p>
-                        <p class="card-text">You have <b><?php echo $obj->countRemainingYeaVotes(); ?></b> individual yea votes remaining</p>
+                        <p class="card-text">You have <b><?php echo $obj->countRemainingYeaVotesForDelegate(); ?></b> individual yea votes remaining</p>
+                        <p class="card-text">Your caucus has <b><?php echo $obj->countRemainingYeaVotesForCaucus($_SESSION["caucus_id"]); ?></b> yea votes remaining</p>
                         <hr>
                         <p><?php echo $obj->formatPresentDelegates(); ?></p>
                         <?php if ($_SESSION["is_present"] == 0): ?>
