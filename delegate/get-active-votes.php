@@ -29,8 +29,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
                 "sponsor" => $row['sponsor'],
                 "link" => $row['link'],
                 "caucus" => $row['caucus'],
-                // "is_open_for_delegates" => $is_open_for_delegates,
-                // "is_open_for_caucuses" => $is_open_for_caucuses,
+                "is_open_for_delegates" => $row['is_open_for_delegates'],
+                "is_open_for_caucuses" => $row['is_open_for_caucuses']
             );
         }
 		
