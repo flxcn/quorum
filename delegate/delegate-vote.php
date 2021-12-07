@@ -11,8 +11,8 @@ if(!isset($_SESSION["delegate_signed_in"]) || $_SESSION["delegate_signed_in"] !=
 
 
 // Include Ballot Class
-require_once '../classes/Ballot.php';
-$obj = new Ballot();
+require_once '../classes/DelegateBallot.php';
+$obj = new DelegateBallot();
 
 if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
 
