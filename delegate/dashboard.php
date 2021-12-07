@@ -80,7 +80,7 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
                         <h5 class="card-title"><?php echo $_SESSION["first_name"] . " " . $_SESSION["last_name"]; ?></h5>
                         <small class="card-text text-muted"><?php echo $_SESSION["username"]; ?></small>
                         <hr>
-                        <p class="card-text">Member of the <b><?php echo $_SESSION["caucus"]; ?> Caucus</b></p>
+                        <p class="card-text">Member of the <b><?php echo $_SESSION["caucus_title"]; ?> Caucus</b></p>
                         <p class="card-text">You have <b><?php echo $obj->countRemainingYeaVotes(); ?></b> individual yea votes remaining</p>
                         <hr>
                         <p><?php echo $obj->formatPresentDelegates(); ?></p>
