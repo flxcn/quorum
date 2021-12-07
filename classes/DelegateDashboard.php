@@ -68,7 +68,7 @@ class DelegateDashboard {
         }
     }
 
-    public function countRemainingYeaVotes() {
+    public function countRemainingYeaVotesForDelegate() {
         $sql =
             "SELECT 
                 COUNT(*) 
@@ -81,5 +81,20 @@ class DelegateDashboard {
 		$status = $stmt->execute(['delegate_id' => $this->delegate_id]);
         $count = $stmt->fetchColumn();
         return MAX_YEA_DELEGATE_BALLOTS - $count;
+    }
+
+    public function countRemainingYeaVotesForCaucus($caucus_id) {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM 
+                caucus_ballots
+            WHERE decision = true
+            AND caucus_id = :caucus_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['caucus_id' => $caucus_id]);
+        $count = $stmt->fetchColumn();
+        return MAX_YEA_CAUCUS_BALLOTS - $count;
     }
 }
