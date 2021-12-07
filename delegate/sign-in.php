@@ -34,7 +34,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Set session variables
             $_SESSION["delegate_signed_in"] = true;
-            $_SESSION["caucus"] = $delegateObj->getCaucus();
+            $_SESSION["caucus_id"] = $delegateObj->getCaucusId();
+            $_SESSION["caucus_title"] = $delegateObj->getCaucusTitle();
             $_SESSION["delegate_id"] = $delegateObj->getDelegateId();
             $_SESSION["first_name"] = $delegateObj->getFirstName();
             $_SESSION["last_name"] = $delegateObj->getLastName();
