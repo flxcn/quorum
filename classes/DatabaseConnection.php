@@ -11,7 +11,7 @@ define('DB_USERNAME','root');
 define('DB_PASSWORD','root');
 
 define("MAX_YEA_DELEGATE_BALLOTS",7);
-define("MAX_YEA_CAUCUS_BALLOTS",7);
+define("MAX_YEA_CAUCUS_BALLOTS",6);
 
 date_default_timezone_set('America/New_York');
 
