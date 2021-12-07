@@ -15,7 +15,7 @@
 
             <table style="margin-top: 1.5em;">   
                 <tr style="margin-bottom: 0.75em;">
-                    <td>ART.</td>
+                    <td>AMEND.</td>
                     <td id="voteId">&nbsp;&nbsp;&nbsp;1028</td>
                 </tr>
 
