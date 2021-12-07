@@ -14,7 +14,8 @@ class DelegateDashboard {
         $sql =
             "SELECT * 
             FROM    votes
-            WHERE   is_active = true
+            WHERE   is_open_for_delegates = true
+            OR      is_open_for_caucuses = true
             ORDER BY created_on ASC";
         
         $stmt = $this->pdo->prepare($sql);
