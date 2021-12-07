@@ -11,6 +11,8 @@ class ModeratorDashboard {
         public function getDelegates() {
                 $sql =
                         "SELECT * FROM delegates
+                        INNER JOIN caucuses 
+                        ON delegates.caucus_id = caucuses.caucus_id
                         ORDER BY first_name ASC";
                 $stmt = $this->pdo->prepare($sql);
                 $status = $stmt->execute();
