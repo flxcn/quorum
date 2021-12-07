@@ -6,7 +6,8 @@ class Delegate {
     private $delegate_id;
     private $first_name;
     private $last_name;
-    private $caucus;    
+    private $caucus_id;
+    private $caucus_title;    
     private $username;
     
     private $is_present;
@@ -39,19 +40,19 @@ class Delegate {
     public function getLastName() {
         return $this->last_name;
     }
-   
-    public function setSchool($school) {
-        $this->school = $school;
+
+    public function setCaucusId($caucus_id) {
+        $this->caucus_id = $caucus_id;
     }
-    public function getSchool() {
-        return $this->school;
+    public function getCaucusId() {
+        return $this->caucus_id;
     }
 
-    public function setCaucus($caucus) {
-        $this->caucus = $caucus;
+    public function setCaucusTitle($caucus_title) {
+        $this->caucus_title = $caucus_title;
     }
-    public function getCaucus() {
-        return $this->caucus;
+    public function getCaucusTitle() {
+        return $this->caucus_title;
     }
 
 
@@ -78,35 +79,6 @@ class Delegate {
     public function getUsername() {
         return $this->username;
     }
-
-    public function setPassword(string $password): string {
-        if(empty($password)) {
-            return "Please enter a password.";
-        }
-        else {
-            $this->password = $password;
-            return "";
-        }
-    }
-
-    public function getPassword() {
-        return $this->password;
-    }
-
-    public function setConfirmPassword(string $confirm_password): string
-    {
-        if(empty($confirm_password)) {
-            return "Please confirm password.";
-        }
-
-        if(strcmp($this->password,$confirm_password) != 0){
-            return "Password did not match.";
-        }
-
-        $this->confirm_password = $confirm_password;
-        return "";
-    }
-   
    
     public function setIsPresent(bool $is_present) {
         $this->is_present = $is_present;
@@ -151,7 +123,7 @@ class Delegate {
     // Sign in with username
     public function signIn(): bool
     {
-        $sql = "SELECT first_name, last_name, delegate_id, caucus, username, is_present FROM delegates WHERE username = :username";
+        $sql = "SELECT first_name, last_name, delegate_id, delegates.caucus_id, username, is_present, title FROM delegates INNER JOIN caucuses ON delegates.caucus_id = caucuses.caucus_id WHERE username = :username";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute(['username' => $this->username]);
         $delegate = $stmt->fetch();
@@ -159,7 +131,8 @@ class Delegate {
         if ($delegate)
         {
             $this->delegate_id = $delegate["delegate_id"];
-            $this->caucus = $delegate["caucus"];
+            $this->caucus_id = $delegate["caucus_id"];
+            $this->caucus_title = $delegate["title"];
             $this->first_name = $delegate["first_name"];
             $this->last_name = $delegate["last_name"];
             $this->is_present = $delegate["is_present"];
@@ -214,6 +187,27 @@ class Delegate {
         $status = $stmt->execute(['delegate_id' => $this->delegate_id]);
         return $status;
     }
+
+    public function getCaucusesForDelegateRegistration(): ?string
+	{
+		$sql = "SELECT caucus_id, title FROM caucuses";
+
+		$stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute();
+		if(!$status) {
+			return null;
+		}
+		else {
+			$caucuses = array();
+			$caucuses[] = array("title" => 'Choose...', "caucus_id" => '');
+			foreach ($stmt as $row)
+			{
+				$caucuses[] = array("title" => $row['title'], "caucus_id" => $row['caucus_id']);
+			}
+			$jsonCaucuses = json_encode($caucuses);
+			return $jsonCaucuses;
+		}
+	}
 
 }
 ?>
