@@ -23,6 +23,14 @@ class CaucusBallot {
         return $this->delegate_id;
     }
 
+    public function setCaucusId($caucus_id) {
+        $this->caucus_id = $caucus_id;
+    }
+
+    public function getCaucusId() {
+        return $this->caucus_id;
+    }
+
     public function setVoteId($vote_id) {
         $this->vote_id = $vote_id;
     }
@@ -39,13 +47,13 @@ class CaucusBallot {
     }
 
     public function addBallot() {
-        $sql = "INSERT INTO ballots (vote_id, delegate_id, decision)
-			VALUES (:vote_id, :delegate_id, :decision)";
+        $sql = "INSERT INTO caucus_ballots (vote_id, caucus_id, decision)
+			VALUES (:vote_id, :caucus_id, :decision)";
 		$stmt = $this->pdo->prepare($sql);
 		$status = $stmt->execute(
 			[
 				'vote_id' => $this->vote_id,
-                'delegate_id' => $this->delegate_id,
+                'caucus_id' => $this->caucus_id,
                 'decision' => $this->decision
 			]);
 
@@ -57,19 +65,19 @@ class CaucusBallot {
             "SELECT 
                 COUNT(*) 
             FROM 
-                ballots
+                caucus_ballots
             WHERE decision = true
-            AND delegate_id = :delegate_id";
+            AND caucus_id = :caucus_id";
         
         $stmt = $this->pdo->prepare($sql);
 		$status = $stmt->execute(['delegate_id' => $this->delegate_id]);
         $count = $stmt->fetchColumn();
-        return MAX_YEA_DELEGATE_BALLOTS - $count;
+        return MAX_YEA_CAUCUS_BALLOTS - $count;
     }
 
-    public function checkBallotExists($vote_id, $delegate_id): bool {
-        $stmt = $this->pdo->prepare("SELECT 1 FROM ballots WHERE vote_id = :vote_id AND delegate_id = :delegate_id");
-        $stmt->execute(['vote_id' => $vote_id, 'delegate_id' => $delegate_id]);
+    public function checkBallotExists($vote_id, $caucus_id): bool {
+        $stmt = $this->pdo->prepare("SELECT 1 FROM caucus_ballots WHERE vote_id = :vote_id AND caucus_id = :caucus_id");
+        $stmt->execute(['vote_id' => $vote_id, 'caucus_id' => $caucus_id]);
         return (bool)$stmt->fetch();
     }
 }
