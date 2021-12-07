@@ -26,8 +26,12 @@ $(document).ready(function(){
                     html += '        <p class="card-text"><i>Remember, amendments require 3/4 of delegates to pass.</i></p>';
                     html += '    </div>';
                     html += '    <div class="card-footer overflow-auto bg-white">';
-                    html += '        <a class="btn btn-success" href="delegate-vote.php?vote_id=' + value.vote_id + '">Vote as a Delegate</a>';
-                    html += '        <a class="btn btn-secondary" disabled>Vote as a Caucus</a>';
+                    if(value.is_open_for_delegates) {
+                        html += '        <a class="btn btn-success" href="delegate-vote.php?vote_id=' + value.vote_id + '">Vote as a Delegate</a>';
+                    }
+                    if(value.is_open_for_caucuses) {
+                        html += '        <a class="btn btn-primary" href="caucus-vote.php?vote_id=' + value.vote_id + '">Vote as a Caucus</a>';
+                    }
                     html += '    </div>';
                     html += '</div>';
                 });
