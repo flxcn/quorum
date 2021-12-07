@@ -38,7 +38,7 @@ class DelegateBallot {
     }
 
     public function addBallot() {
-        $sql = "INSERT INTO ballots (vote_id, delegate_id, decision)
+        $sql = "INSERT INTO delegate_ballots (vote_id, delegate_id, decision)
 			VALUES (:vote_id, :delegate_id, :decision)";
 		$stmt = $this->pdo->prepare($sql);
 		$status = $stmt->execute(
@@ -56,7 +56,7 @@ class DelegateBallot {
             "SELECT 
                 COUNT(*) 
             FROM 
-                ballots
+                delegate_ballots
             WHERE decision = true
             AND delegate_id = :delegate_id";
         
@@ -67,7 +67,7 @@ class DelegateBallot {
     }
 
     public function checkBallotExists($vote_id, $delegate_id): bool {
-        $stmt = $this->pdo->prepare("SELECT 1 FROM ballots WHERE vote_id = :vote_id AND delegate_id = :delegate_id");
+        $stmt = $this->pdo->prepare("SELECT 1 FROM delegate_ballots WHERE vote_id = :vote_id AND delegate_id = :delegate_id");
         $stmt->execute(['vote_id' => $vote_id, 'delegate_id' => $delegate_id]);
         return (bool)$stmt->fetch();
     }
