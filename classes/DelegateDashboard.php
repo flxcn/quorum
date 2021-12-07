@@ -73,7 +73,7 @@ class DelegateDashboard {
             "SELECT 
                 COUNT(*) 
             FROM 
-                ballots
+                delegate_ballots
             WHERE decision = true
             AND delegate_id = :delegate_id";
         
