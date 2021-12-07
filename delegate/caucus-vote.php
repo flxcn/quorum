@@ -8,15 +8,13 @@ if(!isset($_SESSION["delegate_signed_in"]) || $_SESSION["delegate_signed_in"] !=
     exit;
 }
 
-
-
-// Include Ballot Class
+// Include Caucus Ballot Class
 require_once '../classes/CaucusBallot.php';
 $obj = new CaucusBallot();
 
 if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
 
-    if($obj->checkBallotExists(trim($_GET["vote_id"]), $_SESSION["delegate_id"])) {
+    if($obj->checkBallotExists(trim($_GET["vote_id"]), $_SESSION["caucus_id"])) {
         header("location: history.php");
     }
 
@@ -27,10 +25,10 @@ if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     // Check input errors before inserting in database
-    if(isset($_SESSION["delegate_id"]) && isset($_POST["decision"]) && isset($_POST["vote_id"]))
+    if(isset($_SESSION["caucus_id"]) && isset($_POST["decision"]) && isset($_POST["vote_id"]))
     {
 
-        $obj->setDelegateId($_SESSION["delegate_id"]);
+        $obj->setCaucusId($_SESSION["caucus_id"]);
         $obj->setVoteId($_POST["vote_id"]);
 
         if(strcmp($_POST["decision"],"yea") == 0) {
@@ -71,7 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <meta name="description" content="">
     <meta name="author" content="Felix Chen">
     
-    <title>Vote as a Delegate!</title>
+    <title>Vote as a Caucus!</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/bootstrap-5.0.2-dist/css/bootstrap.min.css" rel="stylesheet">
@@ -85,7 +83,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         <div class="row">
             <main class="ms-sm-auto px-md-4">
                 <div class="col-12 col-md-6 card mt-3 mx-auto border-primary">
-                    <h5 class="card-header">Vote!</h5>
+                    <h5 class="card-header">Vote as a Caucus!</h5>
                     <div class="card-body">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>"/>
@@ -93,7 +91,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 <option value="">Select option</option>
                                 <option value="yea">Yea</option>
                                 <option value="nay">Nay</option>
-                                <option value="abstain">Abstain</option>
                             </select>
                             <p class="text-danger"><?php echo $error; ?></p>
                             <input type="submit" value="Vote!" class="btn btn-success"> 
