@@ -92,7 +92,7 @@ $delegates = $obj->getDelegates();
                                 <td><?php echo $delegate["first_name"]; ?></td>
                                 <td><?php echo $delegate["last_name"]; ?></td>
                                 <td><?php echo $delegate["username"]; ?></td>
-                                <td><?php echo $delegate["caucus"]; ?></td>
+                                <td><?php echo $delegate["title"]; ?></td>
                                 <?php if($delegate["is_present"] === 1): echo "<td class='text-success'>Present</td>"; ?>
                                 <?php else: echo "<td class='text-danger'>Absent</td>"; ?>
                                 <?php endif; ?>
