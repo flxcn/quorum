@@ -18,7 +18,7 @@ $votes = $obj->getPastVotes();
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
-    <title>Delegates</title>
+    <title>My Record</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -56,49 +56,55 @@ $votes = $obj->getPastVotes();
     </header>
     
     <div class="container">
-        <div class="pt-4 text-center">
-            <!-- <img class="d-block mx-auto mb-4" src="../assets/images/icons8-vote-64.png" alt="" width="72" height="72"> -->
-            <h2 class="mt-4">Constitutional Convention</h2>
-            <p class="lead">Completed Votes</p>
+        <div class="pt-5 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">My Voting Record</h1>
         </div>
-
-        <!-- <hr> -->
 
         <div class="row">
             <div class="col-md-12 order-md-1">
                 <?php if($votes):?>
-                    <table class="table table-striped">
-                        <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Amendment Name</th>
-                            <th scope="col">Proposed By</th>
-                            <th scope="col">Caucus</th>
-                            <th scope="col">My Vote</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach($votes as $vote):?>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
                             <tr>
-                                <th scope="row"><?php echo $vote["vote_id"]; ?></th>
-                                <td><?php echo $vote["title"]; ?></td>
-                                <td><?php echo $vote["sponsor"]; ?></td>
-                                <td><?php echo $vote["caucus"]; ?></td>
-                                <?php if($vote["decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
-                                <?php elseif($vote["decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
-                                <?php else: echo "<td class='text-secondary'>Abstain</td>"; ?>
-                                <?php endif; ?>
-                                <td><a href="<?php echo $vote['link']; ?>">View Text</a></td>
+                                <th scope="col">#</th>
+                                <th scope="col">Amendment Name</th>
+                                <th scope="col">Proposed By</th>
+                                <!-- <th scope="col">Caucus</th> -->
+                                <th scope="col">My Vote</th>
+                                <th scope="col">Caucus Vote</th>
+                                <th scope="col">Action</th>
                             </tr>
-                            <?php endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php foreach($votes as $vote):?>
+                                <tr>
+                                    <th scope="row"><?php echo $vote["vote_id"]; ?></th>
+                                    <td><?php echo $vote["title"]; ?></td>
+                                    <!-- <td><?php // echo $vote["sponsor"]; ?></td> -->
+                                    <td><?php echo $vote["caucus"]; ?></td>
+                                    <?php if($vote["delegate_decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
+                                    <?php elseif($vote["delegate_decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
+                                    <?php else: echo "<td class='text-secondary'>Abstain</td>"; ?>
+                                    <?php endif; ?>
+                                    <?php if($vote["caucus_decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
+                                    <?php elseif($vote["caucus_decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
+                                    <?php else: echo "<td class='text-secondary'>Pending</td>"; ?>
+                                    <?php endif; ?>
+                                    <td><a href="<?php echo $vote['link']; ?>">View Text</a></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
                 <?php else: ?>
                     <p class="text-center"><i>No completed votes yet.</i></p>
                 <?php endif;?>
             </div>
         </div>
+
+        <hr>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2021 Felix Chen</p>
