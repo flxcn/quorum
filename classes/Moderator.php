@@ -4,23 +4,12 @@ require_once "DatabaseConnection.php";
 class Moderator {
     protected $pdo = null;
     private $moderator_id;
-    private $first_name;
-    private $last_name;
-    private $conference_id;
-    private $committee_id;
-    
     private $username;
     private $password;
-    
-    private $is_enabled;
     private $created_on;
-    //private $verification_code;
-    private $last_active_on;
 
     public function __construct() {
         $this->pdo = DatabaseConnection::instance();
-        $this->conference_id = 1;
-        $this->is_enabled = true;
 	}
 
     // getters and setters
@@ -33,6 +22,7 @@ class Moderator {
         return $this->moderator_id;
     }
 
+    // Set username for new Moderator registration
     public function setUsername(string $username): string
     {
         $stmt = $this->pdo->prepare('SELECT count(*) FROM moderators WHERE username = :username');
@@ -128,7 +118,7 @@ class Moderator {
         return (bool)$stmt->fetch();
     }
 
-    // sign-in with username and password
+    // Sign in with username and password
     public function signIn(): bool
     {
         $sql = "SELECT moderator_id, username, password FROM moderators WHERE username = :username";
