@@ -10,6 +10,7 @@ class DelegateDashboard {
         $this->delegate_id = $delegate_id;
 	}
 
+    // Return an array of votes which are currently open to delegates or caucuses
     public function getOngoingVotes() {
         $sql =
             "SELECT * 
@@ -29,13 +30,15 @@ class DelegateDashboard {
 		}
     }
 
+    // Count the number of votes which are currently open to delegates or caucuses
     public function countOngoingVotes() {
         $sql =
             "SELECT 
                 COUNT(*) 
             FROM 
                 votes
-            WHERE is_active = true";
+            WHERE   is_open_for_delegates = true
+            OR      is_open_for_caucuses = true";
         
         $stmt = $this->pdo->prepare($sql);
 		$status = $stmt->execute();
@@ -43,7 +46,8 @@ class DelegateDashboard {
         return $count;
     }
 
-    public function countPresentDelegates() {
+    // Count the number of Delegates which are marked present
+    private function countPresentDelegates() {
         $sql =
             "SELECT 
                 COUNT(*) 
@@ -57,6 +61,7 @@ class DelegateDashboard {
         return $count;
     }
 
+    // Format the display of present delegates
     public function formatPresentDelegates() {
         $count = $this->countPresentDelegates();
         if($count == 1) {
@@ -68,6 +73,7 @@ class DelegateDashboard {
         }
     }
 
+    // Count how many yea votes a Delegate has left
     public function countRemainingYeaVotesForDelegate() {
         $sql =
             "SELECT 
@@ -83,6 +89,7 @@ class DelegateDashboard {
         return MAX_YEA_DELEGATE_BALLOTS - $count;
     }
 
+    // Count how many yea votes a Delegate's Caucus has left
     public function countRemainingYeaVotesForCaucus($caucus_id) {
         $sql =
             "SELECT 
