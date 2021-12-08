@@ -160,6 +160,22 @@ class Delegate {
 
     }
 
+    // Insert new Delegate into Delegates table
+    public function addDelegate() {
+        $sql = "INSERT INTO delegates (username, first_name, last_name, caucus_id)
+			VALUES (:username, :first_name, :last_name, :caucus_id)";
+		$stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(
+			[
+				'username' => $this->username,
+				'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+				'caucus_id' => $this->caucus_id,
+			]);
+
+		return $status;
+    }
+
     // Update an existing Delegate
     public function updateDelegate() {
         $sql = 
