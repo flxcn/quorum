@@ -69,14 +69,16 @@ $caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_na
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Felix Chen">
-    <link rel="icon" type="image/png" href="icon.png">
+    <link rel="icon" type="image/png" href="../assets/images/icon.png">
     <title>H-SPAN | Vote Tally</title>
     <link href="../assets/css/hspan.css" rel="stylesheet">
 </head>
 <body>
     <div class="bgimg">
         <div class="middle">
-            <p id="title"><?php echo $obj->getSponsor(); ?><br>of <?php echo $obj->getCaucus(); ?> CAUCUS<br>ON <?php echo $obj->getTitle(); ?></p>
+        <!-- <p id="title"><?php // echo $obj->getSponsor(); ?><br>of <?php // echo $obj->getCaucus(); ?> CAUCUS<br>ON <?php // echo $obj->getTitle(); ?></p> -->
+
+            <p id="title" style="text-transform: uppercase;"><?php echo $obj->getCaucus(); ?> CAUCUS<br>ON <?php echo $obj->getTitle(); ?></p>
 
             <table style="margin-top: 1.5em;">   
                 <tr style="margin-bottom: 0.75em;">
@@ -155,17 +157,17 @@ $caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_na
             var caucusNayCount = parseInt(document.getElementById("caucusNayCount").innerHTML);
             var caucusNonvotingCount = parseInt(document.getElementById("caucusNonvotingCount").innerHTML);
 
-            if (delegateYeaCount / (delegateYeaCount + delegateNayCount) >= 0.75 && caucusYeaCount / (caucusYeaCount + caucusNayCount + caucusNonvotingCount) >= 0.667) {
+            if (delegateYeaCount >= Math.floor(0.75 * (delegateYeaCount + delegateNayCount)) && caucusYeaCount >= Math.floor(0.667 * (caucusYeaCount + caucusNayCount + caucusNonvotingCount))) {
                 document.getElementById("outcome").innerHTML = "PASSAGE SECURED";
                 document.getElementById("outcome").style.backgroundColor = "green";
             }
-            else if (delegateYeaCount / (delegateYeaCount + delegateNayCount) < 0.75 || caucusYeaCount / (caucusYeaCount + caucusNayCount + caucusNonvotingCount) < 0.667)
+            else if (delegateYeaCount < Math.floor(0.75 * (delegateYeaCount + delegateNayCount)) || caucusYeaCount < Math.floor(0.667 * (caucusYeaCount + caucusNayCount + caucusNonvotingCount)))
             {
                 document.getElementById("outcome").innerHTML = "PASSAGE FAILED";
                 document.getElementById("outcome").style.backgroundColor = "red";
             }
             else {
-                document.getElementById("outcome").innerHTML = "ERROR";
+                document.getElementById("outcome").innerHTML = "INCONCLUSIVE";
                 document.getElementById("outcome").style.backgroundColor = "white";
                 document.getElementById("outcome").style.color = "black";
             }
