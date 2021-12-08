@@ -169,6 +169,22 @@ class Vote {
         }
     }
 
+    public function countDelegateYeaVotes() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision = true
+            AND votes.vote_id = :vote_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        $count = $stmt->fetchColumn();
+        return $count;
+    }
+
     public function getDelegateNayVotes() {
         $sql =
             "SELECT first_name, last_name, ballot_id
@@ -187,6 +203,22 @@ class Vote {
             $delegate_yea_ballots = $stmt->fetchAll();
             return $delegate_yea_ballots;
         }
+    }
+
+    public function countDelegateNayVotes() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision = false
+            AND votes.vote_id = :vote_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        $count = $stmt->fetchColumn();
+        return $count;
     }
 
     public function getDelegateAbstainVotes() {
@@ -209,6 +241,22 @@ class Vote {
         }
     }
 
+    public function countDelegateAbstainVotes() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision IS NULL
+            AND votes.vote_id = :vote_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        $count = $stmt->fetchColumn();
+        return $count;
+    }
+
     public function getCaucusYeaVotes() {
         $sql =
             "SELECT caucuses.title, caucus_ballots.ballot_id
@@ -229,6 +277,22 @@ class Vote {
         }
     }
 
+    public function countCaucusYeaVotes() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM votes
+            INNER JOIN caucus_ballots ON votes.vote_id = caucus_ballots.vote_id
+            INNER JOIN caucuses ON caucus_ballots.caucus_id = caucuses.caucus_id
+            WHERE decision = true
+            AND votes.vote_id = :vote_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        $count = $stmt->fetchColumn();
+        return $count;
+    }
+
     public function getCaucusNayVotes() {
         $sql =
             "SELECT caucuses.title, caucus_ballots.ballot_id
@@ -247,6 +311,22 @@ class Vote {
             $delegate_yea_ballots = $stmt->fetchAll();
             return $delegate_yea_ballots;
         }
+    }
+
+    public function countCaucusNayVotes() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM votes
+            INNER JOIN caucus_ballots ON votes.vote_id = caucus_ballots.vote_id
+            INNER JOIN caucuses ON caucus_ballots.caucus_id = caucuses.caucus_id
+            WHERE decision = false
+            AND votes.vote_id = :vote_id";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        $count = $stmt->fetchColumn();
+        return $count;
     }
 
     public function countDelegatesPresent() {
