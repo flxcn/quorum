@@ -40,6 +40,7 @@ body, html {
     text-align: left;
     letter-spacing: 0.1em;
     margin-bottom: 1.5em;
+    width: 35vw;
 }
 
 th {
@@ -51,6 +52,10 @@ td {
     padding-right: 0.4em;
     padding-bottom: 0.1em;
     text-align: center;
+}
+
+#title {
+    text-transform: uppercase;
 }
 
 #time {
