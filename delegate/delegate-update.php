@@ -7,6 +7,7 @@ session_start();
 $obj = new Delegate();
 $obj->setDelegateId($_SESSION["delegate_id"]);
 
+// Mark this Delegate as present
 if($obj->markPresent()) {
     $_SESSION["is_present"] = 1;
     header('location:dashboard.php');
