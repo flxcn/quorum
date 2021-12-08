@@ -19,7 +19,7 @@ $error = "";
 $obj = new Delegate();
 $jsonCaucuses = $obj->getCaucusesForDelegateRegistration();
 
-// Processing form data when form is submitted
+// Process form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj = new Delegate();
 
@@ -31,7 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $last_name = trim($_POST["last_name"]);
     $error .= $obj->setLastName($last_name);
 
-    // Set school
+    // Set caucus_id
     $caucus_id = trim($_POST["caucus_id"]);
     $error .= $obj->setCaucusId($caucus_id);
 
@@ -41,6 +41,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(empty($error))
     {
+        // Attempt to add Delegate
         if($obj->addDelegate()) {
         header("location: sign-in.php");
         }
@@ -69,6 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="../assets/css/register.css" rel="stylesheet">
 
     <script>
+        // Populate the Caucuses dropdown selection with existing Caucuses
         var caucuses = <?php echo $jsonCaucuses;?>;
         function loadCaucuses() {
             var select = document.getElementById("caucus_id");
