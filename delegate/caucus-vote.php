@@ -18,6 +18,10 @@ if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
         header("location: history.php");
     }
 
+    if($obj->countRemainingYeaVotes() == 0) {
+        header("location: history.php");
+    }
+
     $error = "";
     $vote_id = trim($_GET["vote_id"]);
 }
