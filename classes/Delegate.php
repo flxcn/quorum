@@ -9,7 +9,6 @@ class Delegate {
     private $caucus_id;
     private $caucus_title;    
     private $username;
-    
     private $is_present;
     private $created_on;
 
@@ -55,7 +54,7 @@ class Delegate {
         return $this->caucus_title;
     }
 
-
+    // Check to see if a proposed username for Delegate registration is invalid or already taken
     public function setUsername(string $username): string
     {
         $stmt = $this->pdo->prepare('SELECT count(*) FROM delegates WHERE username = :username');
@@ -98,7 +97,7 @@ class Delegate {
 
     // SIGN-IN METHODS
 
-    // Set username
+    // Set username for sign-in
     public function setUsernameForSignIn(string $username): string {
         if(empty($username)) {
             return "Please enter your email address.";
@@ -161,6 +160,7 @@ class Delegate {
 
     }
 
+    // Update an existing Delegate
     public function updateDelegate() {
         $sql = 
             "UPDATE delegates 
@@ -178,6 +178,7 @@ class Delegate {
         return $status;
     }
 
+    // Mark a specific Delegate as present for purposes of a quorum
     public function markPresent() {
         $sql = 
             "UPDATE delegates 
@@ -188,6 +189,7 @@ class Delegate {
         return $status;
     }
 
+    // Return an array of current caucuses for use when registering a new Delegate 
     public function getCaucusesForDelegateRegistration(): ?string
 	{
 		$sql = "SELECT caucus_id, title FROM caucuses";
@@ -198,6 +200,7 @@ class Delegate {
 			return null;
 		}
 		else {
+            // Format data for use in a select HTML element
 			$caucuses = array();
 			$caucuses[] = array("title" => 'Choose...', "caucus_id" => '');
 			foreach ($stmt as $row)
@@ -208,6 +211,5 @@ class Delegate {
 			return $jsonCaucuses;
 		}
 	}
-
 }
 ?>
