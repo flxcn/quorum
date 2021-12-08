@@ -46,6 +46,7 @@ class CaucusBallot {
         return $this->decision;
     }
 
+    // Insert new Ballot into Caucus_Ballots table
     public function addBallot() {
         $sql = "INSERT INTO caucus_ballots (vote_id, caucus_id, decision)
 			VALUES (:vote_id, :caucus_id, :decision)";
@@ -60,6 +61,7 @@ class CaucusBallot {
 		return $status;
     }
 
+    // Count the number of yea votes a Caucus has left
     public function countRemainingYeaVotes() {
         $sql =
             "SELECT 
@@ -75,6 +77,7 @@ class CaucusBallot {
         return MAX_YEA_CAUCUS_BALLOTS - $count;
     }
 
+    // Check if a Caucus has already cast a Ballot for a specific Vote
     public function checkBallotExists($vote_id, $caucus_id): bool {
         $stmt = $this->pdo->prepare("SELECT 1 FROM caucus_ballots WHERE vote_id = :vote_id AND caucus_id = :caucus_id");
         $stmt->execute(['vote_id' => $vote_id, 'caucus_id' => $caucus_id]);
