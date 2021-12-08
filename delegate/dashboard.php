@@ -137,7 +137,7 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
                     var count = Object.keys(data).length;
                     $.each(data, function(key, value){
 
-                        html += '<div class="card bg-white">';
+                        html += '<div class="card bg-white mb-2">';
                         html += '    <div class="card-header bg-white text-black"><b>'+ value.title +'</b></div>';
                         html += '    <div class="card-body overflow-auto" id="messagesArea">';
                         html += '        <p>Proposed by: <b>' + value.sponsor + ' (' + value.caucus + ')</b></p>';
