@@ -35,6 +35,7 @@ class Caucus {
         return $this->description;
     }
 
+    // Insert new Caucus into Caucuses table
     public function addCaucus() {
         $sql = "INSERT INTO caucuses (title, description)
 			VALUES (:title, :description)";
@@ -48,6 +49,7 @@ class Caucus {
 		return $status;
     }
 
+    // Edit existing Caucus in Caucuses table
     public function updateCaucus() {
         $sql = 
             "UPDATE delegates 
@@ -64,16 +66,5 @@ class Caucus {
 
         return $status;
     }
-
-    public function markPresent() {
-        $sql = 
-            "UPDATE delegates 
-            SET is_present = 1
-            WHERE delegate_id = :delegate_id";
-        $stmt = $this->pdo->prepare($sql);
-        $status = $stmt->execute(['delegate_id' => $this->delegate_id]);
-        return $status;
-    }
-
 }
 ?>
