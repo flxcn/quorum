@@ -62,7 +62,7 @@ class CaucusBallot {
     }
 
     // Count the number of yea votes a Caucus has left
-    public function countRemainingYeaVotes() {
+    public function countRemainingYeaVotes($caucus_id) {
         $sql =
             "SELECT 
                 COUNT(*) 
@@ -72,7 +72,7 @@ class CaucusBallot {
             AND caucus_id = :caucus_id";
         
         $stmt = $this->pdo->prepare($sql);
-		$status = $stmt->execute(['delegate_id' => $this->delegate_id]);
+		$status = $stmt->execute(['caucus_id' => $caucus_id]);
         $count = $stmt->fetchColumn();
         return MAX_YEA_CAUCUS_BALLOTS - $count;
     }
