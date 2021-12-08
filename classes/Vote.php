@@ -3,15 +3,14 @@ require_once "DatabaseConnection.php";
 
 class Vote {
     protected $pdo = null;
-    
-    private $vote_id = "";
-    private $title = "";
-    private $sponsor = "";
-    private $caucus = "";
-    private $description = "";
-    private $link = "";
-    private $is_open_for_delegates = "";
-    private $is_open_for_caucuses = "";
+    private $vote_id;
+    private $title;
+    private $sponsor;
+    private $caucus;
+    private $description;
+    private $link;
+    private $is_open_for_delegates;
+    private $is_open_for_caucuses;
 
     public function __construct() {
         $this->pdo = DatabaseConnection::instance();
@@ -86,6 +85,7 @@ class Vote {
     }
 
 
+    // Insert new Vote into Votes table
     public function addVote() {
         $sql = "INSERT INTO votes (title, sponsor, caucus, description, link)
 			VALUES (:title, :sponsor, :caucus, :description, :link)";
@@ -102,6 +102,7 @@ class Vote {
 		return $status;
     }
 
+    // Get Vote details based on vote_id
     public function getVote() {
         $sql = "SELECT * FROM votes WHERE vote_id = :vote_id";
 		$stmt = $this->pdo->prepare($sql);
@@ -123,6 +124,7 @@ class Vote {
 		}
     }
 
+    // Update a Vote
     public function updateVote() {
         $sql = 
             "UPDATE votes 
@@ -149,6 +151,7 @@ class Vote {
 		return $status;
     }
 
+    // Get details of Delegates who cast Yea Ballots for this Vote
     public function getDelegateYeaVotes() {
         $sql =
             "SELECT first_name, last_name, ballot_id
@@ -169,6 +172,7 @@ class Vote {
         }
     }
 
+    // Count Delegates who cast Yea Ballots for this Vote
     public function countDelegateYeaVotes() {
         $sql =
             "SELECT 
@@ -185,6 +189,7 @@ class Vote {
         return $count;
     }
 
+    // Get details of Delegates who cast Nay Ballots for this Vote
     public function getDelegateNayVotes() {
         $sql =
             "SELECT first_name, last_name, ballot_id
@@ -205,6 +210,7 @@ class Vote {
         }
     }
 
+    // Count Delegates who cast Nay Ballots for this Vote
     public function countDelegateNayVotes() {
         $sql =
             "SELECT 
@@ -221,6 +227,7 @@ class Vote {
         return $count;
     }
 
+    // Get details of Delegates who cast Abstain Ballots for this Vote
     public function getDelegateAbstainVotes() {
         $sql =
             "SELECT first_name, last_name, ballot_id
@@ -241,6 +248,7 @@ class Vote {
         }
     }
 
+    // Count Delegates who cast Abstain Ballots for this Vote
     public function countDelegateAbstainVotes() {
         $sql =
             "SELECT 
@@ -257,6 +265,7 @@ class Vote {
         return $count;
     }
 
+    // Get details of Caucuses who cast Yea Ballots for this Vote
     public function getCaucusYeaVotes() {
         $sql =
             "SELECT caucuses.title, caucus_ballots.ballot_id
@@ -277,6 +286,7 @@ class Vote {
         }
     }
 
+    // Count Caucuses who cast Abstain Ballots for this Vote
     public function countCaucusYeaVotes() {
         $sql =
             "SELECT 
@@ -293,6 +303,7 @@ class Vote {
         return $count;
     }
 
+    // Get details of Caucuses who cast Nay Ballots for this Vote
     public function getCaucusNayVotes() {
         $sql =
             "SELECT caucuses.title, caucus_ballots.ballot_id
@@ -313,6 +324,7 @@ class Vote {
         }
     }
 
+    // Count Caucuses who cast Nay Ballots for this Vote
     public function countCaucusNayVotes() {
         $sql =
             "SELECT 
@@ -329,6 +341,7 @@ class Vote {
         return $count;
     }
 
+    // Count the number of Delegates present for vote calculation purposes
     public function countDelegatesPresent() {
         $sql =
             "SELECT 
@@ -343,6 +356,7 @@ class Vote {
         return $count;
     }
 
+    // Count the number of Caucuses present for vote calculation purposes
     public function countCaucusesPresent() {
         $sql =
             "SELECT 
