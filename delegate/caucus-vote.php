@@ -18,10 +18,6 @@ if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
         header("location: history.php");
     }
 
-    if($obj->countRemainingYeaVotes() == 0) {
-        header("location: history.php");
-    }
-
     $error = "";
     $vote_id = trim($_GET["vote_id"]);
 }
@@ -93,7 +89,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>"/>
                             <select name="decision">
                                 <option value="">Select option</option>
-                                <option value="yea">Yea</option>
+                                <?php 
+                                if($obj->countRemainingYeaVotes($_SESSION["caucus_id"]) != 0) {
+                                    echo "<option value='yea'>Yea</option>";
+                                } 
+                                ?>
                                 <option value="nay">Nay</option>
                             </select>
                             <p class="text-danger"><?php echo $error; ?></p>
