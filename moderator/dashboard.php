@@ -56,11 +56,10 @@
         <hr>
 
         <div class="row">
-            <div class="col-md-12 order-md-1">
-                <h4 class="mb-2">Pending Messages</h4>
-                <div id="messagesArea">
-                </div>
-            </div>
+            <a href="delegates.php" class="btn btn-primary col mx-1">Delegate Overview</a>
+            <a href="caucuses.php" class="btn btn-primary col mx-1">Caucus Overview</a>
+            <a href="votes.php" class="btn btn-primary col mx-1">Vote Overview</a>
+            <a href="vote-create.php" class="btn btn-success col mx-1">Create a Vote!</a>
         </div>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
