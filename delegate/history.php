@@ -10,7 +10,8 @@ if(!isset($_SESSION["delegate_signed_in"]) || $_SESSION["delegate_signed_in"] !=
 
 require_once "../classes/DelegateHistory.php";
 $obj = new DelegateHistory($_SESSION["delegate_id"]);
-$votes = $obj->getPastVotes(); 
+$delegate_votes = $obj->getPastDelegateVotes(); 
+$caucus_votes = $obj->getPastCaucusVotes($_SESSION['caucus_id']); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,13 +57,19 @@ $votes = $obj->getPastVotes();
     </header>
     
     <div class="container">
+        <div class="pt-4 text-center">
+            <!-- <img class="d-block mx-auto mb-4" src="../assets/images/icons8-vote-64.png" alt="" width="72" height="72"> -->
+            <h2 class="mt-4">Constitutional Convention</h2>
+            <p class="lead">Voting Record</p>
+        </div>
+
         <div class="pt-5 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">My Voting Record</h1>
+            <h4>Individual Votes</h1>
         </div>
 
         <div class="row">
             <div class="col-md-12 order-md-1">
-                <?php if($votes):?>
+                <?php if($delegate_votes):?>
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -70,25 +77,59 @@ $votes = $obj->getPastVotes();
                                 <th scope="col">#</th>
                                 <th scope="col">Amendment Name</th>
                                 <th scope="col">Proposed By</th>
-                                <!-- <th scope="col">Caucus</th> -->
-                                <th scope="col">My Vote</th>
-                                <th scope="col">Caucus Vote</th>
+                                <th scope="col">Decision</th>
                                 <th scope="col">Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <?php foreach($votes as $vote):?>
+                                <?php foreach($delegate_votes as $vote):?>
                                 <tr>
                                     <th scope="row"><?php echo $vote["vote_id"]; ?></th>
                                     <td><?php echo $vote["title"]; ?></td>
-                                    <!-- <td><?php // echo $vote["sponsor"]; ?></td> -->
                                     <td><?php echo $vote["caucus"]; ?></td>
-                                    <?php if($vote["delegate_decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
-                                    <?php elseif($vote["delegate_decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
+                                    <?php if($vote["decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
+                                    <?php elseif($vote["decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
                                     <?php else: echo "<td class='text-secondary'>Abstain</td>"; ?>
                                     <?php endif; ?>
-                                    <?php if($vote["caucus_decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
-                                    <?php elseif($vote["caucus_decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
+                                    <td><a href="<?php echo $vote['link']; ?>">View Text</a></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                <?php else: ?>
+                    <p class="text-center"><i>No individual votes yet.</i></p>
+                <?php endif;?>
+            </div>
+        </div>
+
+        <div class="pt-5 d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h4>Caucus Votes</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 order-md-2">
+                <?php if($caucus_votes):?>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Amendment Name</th>
+                                <th scope="col">Proposed By</th>
+                                <th scope="col">Decision</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($caucus_votes as $vote):?>
+                                <tr>
+                                    <th scope="row"><?php echo $vote["vote_id"]; ?></th>
+                                    <td><?php echo $vote["title"]; ?></td>
+                                    <td><?php echo $vote["caucus"]; ?></td>
+                                    <?php if($vote["decision"] === 1): echo "<td class='text-success'>Yea</td>"; ?>
+                                    <?php elseif($vote["decision"] === 0): echo "<td class='text-danger'>Nay</td>"; ?>
                                     <?php else: echo "<td class='text-secondary'>Pending</td>"; ?>
                                     <?php endif; ?>
                                     <td><a href="<?php echo $vote['link']; ?>">View Text</a></td>
@@ -99,12 +140,10 @@ $votes = $obj->getPastVotes();
                     </div>
 
                 <?php else: ?>
-                    <p class="text-center"><i>No completed votes yet.</i></p>
+                    <p class="text-center"><i>No caucus votes yet.</i></p>
                 <?php endif;?>
             </div>
         </div>
-
-        <hr>
 
         <footer class="my-5 pt-5 text-muted text-center text-small">
             <p class="mb-1">© 2021 Felix Chen</p>
@@ -113,15 +152,5 @@ $votes = $obj->getPastVotes();
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-
-    <!-- Custom JS for this page -->
-    <!-- Define JS variables to hold PHP session variables -->
-    <script type="text/javascript">
-        var moderator_id = <?php echo $_SESSION['moderator_id']; ?>;
-        var committee_id = <?php echo $_SESSION['committee_id'];?>;
-    </script>
-
-    <!-- Script for JQuery Functions -->
-    <script src="../assets/js/moderator-dashboard.js"></script>
 </body>
 </html>
