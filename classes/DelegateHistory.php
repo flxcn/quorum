@@ -10,6 +10,7 @@ class DelegateHistory {
         $this->delegate_id = $delegate_id;
 	}
 
+    // Get an array of details about past Ballots cast by a Delegate
     public function getPastDelegateVotes() {
         $sql =
             "SELECT votes.vote_id, title, sponsor, caucus, link, description, decision
@@ -28,6 +29,7 @@ class DelegateHistory {
 		}
     }
 
+    // Get an array of details about past Ballots cast by a Caucus
     public function getPastCaucusVotes($caucus_id) {
         $sql =
             "SELECT votes.vote_id, title, sponsor, caucus, caucus_id, link, description, decision
@@ -44,20 +46,5 @@ class DelegateHistory {
 			$votes = $stmt->fetchAll();
             return $votes;
 		}
-    }
-
-    public function countRemainingYeaVotes() {
-        $sql =
-            "SELECT 
-                COUNT(*) 
-            FROM 
-                delegate_ballots
-            WHERE decision = true
-            AND delegate_id = :delegate_id";
-        
-        $stmt = $this->pdo->prepare($sql);
-		$status = $stmt->execute(['delegate_id' => $this->delegate_id]);
-        $count = $stmt->fetchColumn();
-        return MAX_YEA_DELEGATE_BALLOTS - $count;
     }
 }
