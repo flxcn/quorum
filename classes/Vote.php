@@ -148,5 +148,132 @@ class Vote {
 
 		return $status;
     }
+
+    public function getDelegateYeaVotes() {
+        $sql =
+            "SELECT first_name, last_name, ballot_id
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision = true
+            AND votes.vote_id = :vote_id";
+
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        if(!$status) {
+            return null;
+        }
+        else {
+            $delegate_yea_ballots = $stmt->fetchAll();
+            return $delegate_yea_ballots;
+        }
+    }
+
+    public function getDelegateNayVotes() {
+        $sql =
+            "SELECT first_name, last_name, ballot_id
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision = false
+            AND votes.vote_id = :vote_id";
+
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        if(!$status) {
+            return null;
+        }
+        else {
+            $delegate_yea_ballots = $stmt->fetchAll();
+            return $delegate_yea_ballots;
+        }
+    }
+
+    public function getDelegateAbstainVotes() {
+        $sql =
+            "SELECT first_name, last_name, ballot_id
+            FROM votes
+            INNER JOIN delegate_ballots ON votes.vote_id = delegate_ballots.vote_id
+            INNER JOIN delegates ON delegate_ballots.delegate_id = delegates.delegate_id
+            WHERE decision is NULL
+            AND votes.vote_id = :vote_id";
+
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        if(!$status) {
+            return null;
+        }
+        else {
+            $delegate_yea_ballots = $stmt->fetchAll();
+            return $delegate_yea_ballots;
+        }
+    }
+
+    public function getCaucusYeaVotes() {
+        $sql =
+            "SELECT caucuses.title, caucus_ballots.ballot_id
+            FROM votes
+            INNER JOIN caucus_ballots ON votes.vote_id = caucus_ballots.vote_id
+            INNER JOIN caucuses ON caucus_ballots.caucus_id = caucuses.caucus_id
+            WHERE decision = true
+            AND votes.vote_id = :vote_id";
+
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        if(!$status) {
+            return null;
+        }
+        else {
+            $delegate_yea_ballots = $stmt->fetchAll();
+            return $delegate_yea_ballots;
+        }
+    }
+
+    public function getCaucusNayVotes() {
+        $sql =
+            "SELECT caucuses.title, caucus_ballots.ballot_id
+            FROM votes
+            INNER JOIN caucus_ballots ON votes.vote_id = caucus_ballots.vote_id
+            INNER JOIN caucuses ON caucus_ballots.caucus_id = caucuses.caucus_id
+            WHERE decision = false
+            AND votes.vote_id = :vote_id";
+
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute(['vote_id' => $this->vote_id]);
+        if(!$status) {
+            return null;
+        }
+        else {
+            $delegate_yea_ballots = $stmt->fetchAll();
+            return $delegate_yea_ballots;
+        }
+    }
+
+    public function countDelegatesPresent() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM 
+                delegates
+            WHERE is_present = true";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count;
+    }
+
+    public function countCaucusesPresent() {
+        $sql =
+            "SELECT 
+                COUNT(*) 
+            FROM 
+                caucuses";
+        
+        $stmt = $this->pdo->prepare($sql);
+		$status = $stmt->execute();
+        $count = $stmt->fetchColumn();
+        return $count;
+    }
 }
 ?>
