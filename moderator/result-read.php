@@ -75,7 +75,7 @@ $caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_na
 <body>
     <div class="bgimg">
         <div class="middle">
-            <p id="title"><?php echo $obj->getSponsor(); ?><br>of <?php echo $obj->getCaucus(); ?><br>ON <?php echo $obj->getTitle(); ?></p>
+            <p id="title"><?php echo $obj->getSponsor(); ?><br>of <?php echo $obj->getCaucus(); ?> CAUCUS<br>ON <?php echo $obj->getTitle(); ?></p>
 
             <table style="margin-top: 1.5em;">   
                 <tr style="margin-bottom: 0.75em;">
