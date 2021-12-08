@@ -8,6 +8,7 @@ if(!isset($_SESSION["delegate_signed_in"]) || $_SESSION["delegate_signed_in"] !=
     exit;
 }
 
+// Instantiate a DelegateDashboard object
 require_once "../classes/DelegateDashboard.php";
 $obj = new DelegateDashboard($_SESSION["delegate_id"]);
 ?>
@@ -67,7 +68,6 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
     
     <div class="container">
         <div class="pt-4 text-center">
-            <!-- <img class="d-block mx-auto mb-4" src="../assets/images/icons8-vote-64.png" alt="" width="72" height="72"> -->
             <h2 class="mt-4">Constitutional Convention</h2>
             <p class="lead">Welcome, <?php echo $_SESSION["first_name"]; ?>!</p>
         </div>
@@ -96,9 +96,7 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
 
             <div class="col-md-8 order-md-1">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom print">
-                    <h4 class="mb-2">Ongoing Votes (<span id="ongoingVotesCount"></span>)</h4>
-                    <!-- <h4 class="mb-2">Ongoing Voting <span id="ongoingVotesCount" class="badge badge-pill badge-secondary">(0)</span></h4> -->
-                    
+                    <h4 class="mb-2">Ongoing Votes (<span id="ongoingVotesCount"></span>)</h4>                    
                     <button class="btn btn-sm btn-outline-secondary" onclick="getOngoingVotes();">Refresh</button>
                 </div>
 
@@ -113,17 +111,11 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
         </footer>
     </div>
 
-    <!-- 
-    <script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="/docs/4.6/assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="./Checkout example · Bootstrap v4.6_files/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
-    -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
     <!-- Custom JS for this page -->
     <!-- Script for JQuery Functions -->
-    <!-- <script src="../assets/js/dashboard.js"></script> -->
     <script>
         $(document).ready(function(){
 
@@ -133,6 +125,7 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
             getOngoingVotes();
         }, 5000);
 
+        // AJAX function to fetch ongoing votes
         function getOngoingVotes()
         {
             $.ajax({
