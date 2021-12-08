@@ -70,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body class="text-center">
     <form class="form-signin" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" novalidate>
-        <img class="mb-4" src="../assets/images/icons8-vote-64.png" alt="" width="72" height="72">
+        <img class="mb-4" src="../assets/images/icon.png" alt="" width="72" height="72">
         
         <h1 class="h3 mb-3 font-weight-normal">Delegate Sign In</h1>
 
