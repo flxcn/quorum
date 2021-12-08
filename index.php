@@ -7,7 +7,7 @@
     <meta name="author" content="Felix Chen">
     <link rel="icon" href="assets/images/icon.png">
 
-    <title>Dialogue</title>
+    <title>Quorum</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
@@ -25,7 +25,6 @@
                 <nav class="nav nav-masthead justify-content-center">
                     <a class="nav-link active" href="#">Home</a>
                     <a class="nav-link" href="moderator/sign-in.php">For Staff</a>
-                    <a class="nav-link" href="about.php">About</a>
                     <a class="nav-link" href="mailto:felixchen@college.harvard.edu">Contact</a>
                 </nav>
             </div>
