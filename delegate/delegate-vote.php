@@ -14,8 +14,10 @@ if(!isset($_SESSION["delegate_signed_in"]) || $_SESSION["delegate_signed_in"] !=
 require_once '../classes/DelegateBallot.php';
 $obj = new DelegateBallot();
 
+// Check that GET parameters are present and valid
 if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
 
+    // Check if ballot has already been cast by this Delegate for this Vote
     if($obj->checkBallotExists(trim($_GET["vote_id"]), $_SESSION["delegate_id"])) {
         header("location: history.php");
     }
@@ -33,6 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $obj->setDelegateId($_SESSION["delegate_id"]);
         $obj->setVoteId($_POST["vote_id"]);
 
+        // Translate the Delegate's decision to a boolean value or null
         if(strcmp($_POST["decision"],"yea") == 0) {
             $obj->setDecision(1);
         }
@@ -47,6 +50,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         }
 
         if(empty($error)) {
+            // Attempt to add new Ballot
             if($obj->addBallot()) {
                 // Success
                 $_SESSION["ballot_success"] = true;
