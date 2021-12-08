@@ -195,7 +195,7 @@ else {
 
                     <hr class="mb-4">
 
-                    <button class="btn btn-danger btn-lg btn-block w-100" type="submit">Create!</button>
+                    <button class="btn btn-danger btn-lg btn-block w-100" type="submit">Update!</button>
                     <br>
                     <a href="votes.php" class="btn w-100 btn-link">Go back</a>
                     </div>
