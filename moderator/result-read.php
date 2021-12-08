@@ -1,3 +1,67 @@
+<?php
+// Initialize the session
+session_start();
+
+// Check if the user is logged in, if not then redirect him to login page
+if(!isset($_SESSION["moderator_signed_in"]) || $_SESSION["moderator_signed_in"] !== true){
+    header("location: sign-in.php");
+    exit;
+}
+
+require_once "../classes/Vote.php";
+
+$title = "";
+$sponsor = "";
+$caucus = "";
+$link = "";
+$description = "";
+$error = "";
+$vote_id = "";
+$is_open_for_caucuses = "";
+$is_open_for_delegates = "";
+
+$vote_id = "";
+
+// Check existence of id parameter before processing further
+if(isset($_GET["vote_id"]) && !empty(trim($_GET["vote_id"]))){
+
+    $obj = new Vote();
+
+    $vote_id =  trim($_GET["vote_id"]);
+    $obj->setVoteId($vote_id);
+
+    if($obj->getVote()) {
+        $vote_id = $obj->getVoteId();
+        $title = $obj->getTitle();
+        $sponsor = $obj->getSponsor();
+        $caucus = $obj->getCaucus();
+        $link = $obj->getLink();
+        $description = $obj->getDescription();
+        $is_open_for_delegates = $obj->getIsOpenForDelegates();
+        $is_open_for_caucuses = $obj->getIsOpenForCaucuses();
+    }
+    else {
+        echo "Existing vote details unavailable.";
+        exit();
+    }        
+}
+else {
+    header("location: error.php");
+    exit();
+}
+
+$delegate_yea_count = $obj->countDelegateYeaVotes();
+$delegate_nay_count = $obj->countDelegateNayVotes();
+$delegate_abstain_count = $obj->countDelegateAbstainVotes();
+$delegate_present_count = $obj->countDelegatesPresent();
+$delegate_nonvoting_count = $delegate_present_count - $delegate_abstain_count - $delegate_nay_count - $delegate_yea_count;
+
+$caucus_yea_count = $obj->countCaucusYeaVotes();
+$caucus_nay_count = $obj->countCaucusNayVotes();
+$caucus_present_count = $obj->countCaucusesPresent();
+$caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_nay_count;
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,36 +75,36 @@
 <body>
     <div class="bgimg">
         <div class="middle">
-            <p id="title">FELIX CHEN OF TEXAS<br>AMENDMENT<br>ON AGREEING TO THE<br>AMENDMENT</p>
+            <p id="title"><?php echo $obj->getSponsor(); ?><br>of <?php echo $obj->getCaucus(); ?><br>ON <?php echo $obj->getTitle(); ?></p>
 
             <table style="margin-top: 1.5em;">   
                 <tr style="margin-bottom: 0.75em;">
                     <td>AMEND.</td>
-                    <td id="voteId">&nbsp;&nbsp;&nbsp;1028</td>
+                    <td id="voteId">&nbsp;&nbsp;&nbsp;<?php echo "#" . $obj->getVoteId(); ?></td>
                 </tr>
 
                 <tr>
                     <td></td>
-                    <td>YEA</td>
+                    <th>YEA</td>
                     <td>NAY</td>
-                    <td>PRES</td>
+                    <td>ABST</td>
                     <td>NV</td>
                 </tr>
             
                 <tr>
-                    <th>DELEGATES</th>
-                    <td id="delegateYeaCount">46</td>
-                    <td id="delegateNayCount">12</td>     
-                    <td>2</td>
-                    <td>1</td>
+                    <th>DELEGATES&nbsp;&nbsp;</th>
+                    <td id="delegateYeaCount"><?php echo $delegate_yea_count; ?></td>
+                    <td id="delegateNayCount"><?php echo $delegate_nay_count; ?></td>     
+                    <td><?php echo $delegate_abstain_count; ?></td>
+                    <td><?php echo $delegate_nonvoting_count; ?></td>
                 </tr>
 
                 <tr>
                     <th>CAUCUSES</th>
-                    <td id="caucusYeaCount">7</td>
-                    <td id="caucusNayCount">2</td>
-                    <td>1</td>
-                    <td>0</td>
+                    <td id="caucusYeaCount"><?php echo $caucus_yea_count; ?></td>
+                    <td id="caucusNayCount"><?php echo $caucus_nay_count; ?></td>
+                    <td></td>
+                    <td id="caucusNonvotingCount"><?php echo $caucus_nonvoting_count; ?></td>
                 </tr>
             </table>
 
@@ -51,13 +115,13 @@
             <p id="outcome"></p>
         </div>
         
-        <a href="results.php" class="logo">
+        <a href="votes.php" class="logo">
             H<span style="font-size: 80%;">&#9642;</span>SPAN
         </a>
     </div>
 
     <script>
-        var duration = 10;
+        var duration = 5;
 
         var countDownDate = new Date(new Date().getTime() + duration * 1000);
         
@@ -86,17 +150,21 @@
 
             var caucusYeaCount = parseInt(document.getElementById("caucusYeaCount").innerHTML);
             var caucusNayCount = parseInt(document.getElementById("caucusNayCount").innerHTML);
+            var caucusNonvotingCount = parseInt(document.getElementById("caucusNonvotingCount").innerHTML);
 
-            if (delegateYeaCount / (delegateYeaCount + delegateNayCount) >= 0.75 && caucusYeaCount / (caucusYeaCount + caucusNayCount) >= 0.75) {
+            if (delegateYeaCount / (delegateYeaCount + delegateNayCount) >= 0.75 && caucusYeaCount / (caucusYeaCount + caucusNayCount + caucusNonvotingCount) >= 0.667) {
                 document.getElementById("outcome").innerHTML = "PASSAGE SECURED";
                 document.getElementById("outcome").style.backgroundColor = "green";
             }
-            else if (delegateYeaCount / (delegateYeaCount + delegateNayCount) < 0.75 || caucusYeaCount / (caucusYeaCount + caucusNayCount) < 0.75)
+            else if (delegateYeaCount / (delegateYeaCount + delegateNayCount) < 0.75 || caucusYeaCount / (caucusYeaCount + caucusNayCount + caucusNonvotingCount) < 0.667)
             {
                 document.getElementById("outcome").innerHTML = "PASSAGE FAILED";
                 document.getElementById("outcome").style.backgroundColor = "red";
             }
             else {
+                document.getElementById("outcome").innerHTML = "ERROR";
+                document.getElementById("outcome").style.backgroundColor = "white";
+                document.getElementById("outcome").style.color = "black";
             }
 
         }
