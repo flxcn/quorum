@@ -120,7 +120,9 @@ $caucus_present_count = $obj->countCaucusesPresent();
             <h1 class="h2">View Vote Details</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
+                    <a href="votes.php" class="btn btn-sm btn-outline-secondary">Back</a>
                     <a href="vote-update.php?vote_id=<?php echo $obj->getVoteId(); ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+
                 </div>
             </div>
         </div>
@@ -131,10 +133,6 @@ $caucus_present_count = $obj->countCaucusesPresent();
                     <h5 class="card-title"><?php echo $obj->getTitle(); ?></h5>
                     <h6 class="card-subtitle mb-2 text-muted"><?php echo $obj->getCaucus(); ?></h6>
                     <p class="card-text"><?php echo $obj->getDescription(); ?></p>
-                    <p class="card-text">
-                        <!-- TODO! -->
-                        <!-- <span class="text-primary">Active for Delegates</span> | <span class="text-primary">Active for Caucuses</span> -->
-                    </p>
                 </div>
             </div>
         </div>
@@ -146,7 +144,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                     <h6 class="card-subtitle mb-4"><?php echo $delegates_yea_count + $delegates_nay_count + $delegates_abstain_count; ?> out of <?php echo $delegates_present_count; ?> delegates have voted</h6>
 
                     <div class="row text-center">
-                        <div class="col-md-4 order-md-1">
+                        <div class="col-md-4">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -159,7 +157,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                                     <tr>
                                         <td>
                                             <?php echo $ballot["first_name"] ." ". $ballot["last_name"]; ?>
-                                            <a href="ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">Delete</a>
+                                            <a class="text-danger" href="delegate-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(x)</a>
                                         </th>
                                     </tr>
                                     <?php endforeach; ?>
@@ -170,7 +168,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                             </table>
                         </div>
 
-                        <div class="col-md-4 order-md-2">
+                        <div class="col-md-4">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -183,7 +181,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                                     <tr>
                                         <td>
                                             <?php echo $ballot["first_name"] ." ". $ballot["last_name"]; ?>
-                                            <a href="ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">x</a>
+                                            <a class="text-danger" href="delegate-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(x)</a>
                                         </th>
                                     </tr>
                                     <?php endforeach; ?>
@@ -194,7 +192,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                             </table>
                         </div>
 
-                        <div class="col-md-4 order-md-3">
+                        <div class="col-md-4">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -207,15 +205,15 @@ $caucus_present_count = $obj->countCaucusesPresent();
                                     <tr>
                                         <td>
                                             <?php echo $ballot["first_name"] ." ". $ballot["last_name"]; ?>
-                                            <a class="text-danger" href="ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(X)</a>
+                                            <a class="text-danger" href="delegate-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(x)</a>
                                         </th>
                                     </tr>
                                     <?php endforeach; ?>
+                                    <?php else: ?>
+                                    <tr><td class="text-center"><i>No abstentions yet.</i></td></tr>
+                                    <?php endif;?>
                                 </tbody>
                             </table>
-                            <?php else: ?>
-                                <tr><td class="text-center"><i>No abstentions yet.</i></td></tr>
-                            <?php endif;?>
                         </div>
                     </div>
                 </div>
@@ -229,11 +227,11 @@ $caucus_present_count = $obj->countCaucusesPresent();
                     <h6 class="card-subtitle mb-4"><?php echo $caucus_yea_count + $caucus_nay_count; ?> out of <?php echo $caucus_present_count; ?> caucuses have voted</h6>
 
                     <div class="row text-center">
-                        <div class="col-md-6 order-md-1">
+                        <div class="col-md-6">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Yea Votes (<?php echo $delegates_yea_count; ?>)</th>
+                                        <th scope="col">Yea Votes (<?php echo $caucus_yea_count; ?>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -242,7 +240,7 @@ $caucus_present_count = $obj->countCaucusesPresent();
                                     <tr>
                                         <td>
                                             <?php echo $ballot["title"]; ?>
-                                            <a class="text-danger" href="caucus-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(X)</a>
+                                            <a class="text-danger" href="caucus-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(x)</a>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>
@@ -253,20 +251,20 @@ $caucus_present_count = $obj->countCaucusesPresent();
                             </table>
                         </div>
 
-                        <div class="col-md-6 order-md-2">
+                        <div class="col-md-6">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Nay Votes (<?php echo $delegates_nay_count; ?>)</th>
+                                        <th scope="col">Nay Votes (<?php echo $caucus_nay_count; ?>)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if($delegate_nay_ballots):?>
-                                    <?php foreach($delegate_nay_ballots as $ballot):?>
+                                    <?php if($caucus_nay_ballots):?>
+                                    <?php foreach($caucus_nay_ballots as $ballot):?>
                                     <tr>
                                         <td>
-                                            <?php echo $ballot["first_name"] ." ". $ballot["last_name"]; ?>
-                                            <a href="ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">x</a>
+                                            <?php echo $ballot["title"]; ?>
+                                            <a class="text-danger" href="caucus-ballot-delete.php?vote_id=<?php echo $ballot['ballot_id']; ?>">(x)</a>
                                         </th>
                                     </tr>
                                     <?php endforeach; ?>
