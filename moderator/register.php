@@ -11,7 +11,6 @@ require_once "../classes/Moderator.php";
 
 $first_name = "";
 $last_name = "";
-
 $username = "";
 $password = "";
 $confirm_password = "";
@@ -21,15 +20,7 @@ $error = "";
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj = new Moderator();
-
-    // Set first_name
-    // $first_name = trim($_POST["first_name"]);
-    // $error .= $obj->setFirstName($first_name);
-
-    // // Set last_name
-    // $last_name = trim($_POST["last_name"]);
-    // $error .= $obj->setLastName($last_name);
-
+    
     // Set username
     $username = trim($_POST["username"]);
     $error .= $obj->setUsername($username);
