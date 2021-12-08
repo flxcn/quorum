@@ -43,7 +43,7 @@ $obj = new DelegateDashboard($_SESSION["delegate_id"]);
 <body class="bg-light">
     <header>
         <nav class="navbar navbar-expand navbar-dark bg-dark">
-            <!-- <a class="navbar-brand" href="#"><img src="../assets/images/icons8-vote-64.png" alt="" width="32" height="32"></a> -->
+            <!-- <a class="navbar-brand" href="#"><img src="../assets/images/icon.png" alt="" width="32" height="32"></a> -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
