@@ -78,7 +78,7 @@ $votes = $obj->getVotes();
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">Art. #</th>
+                            <th scope="col">Amend. #</th>
                             <th scope="col">Title</th>
                             <th scope="col">Proposed by</th>
                             <th scope="col">Delegate Access</th>
@@ -100,7 +100,8 @@ $votes = $obj->getVotes();
                                 <?php endif; ?>
                                 <td>
                                     <a href="vote-update.php?vote_id=<?php echo $vote['vote_id']; ?>">Edit&nbsp;Vote</a> |
-                                    <a href="result-read.php?vote_id=<?php echo $vote['vote_id']; ?>">View&nbsp;Results</a>
+                                    <a href="vote-view.php?vote_id=<?php echo $vote['vote_id']; ?>">View&nbsp;Details</a> |
+                                    <a href="result-read.php?vote_id=<?php echo $vote['vote_id']; ?>">Present&nbsp;Results</a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
