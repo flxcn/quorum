@@ -37,6 +37,7 @@ class DelegateBallot {
         return $this->decision;
     }
 
+    // Insert new Ballot into Delegate_Ballots table
     public function addBallot() {
         $sql = "INSERT INTO delegate_ballots (vote_id, delegate_id, decision)
 			VALUES (:vote_id, :delegate_id, :decision)";
@@ -51,6 +52,7 @@ class DelegateBallot {
 		return $status;
     }
 
+    // Count the number of remaining yea votes a Delegate has
     public function countRemainingYeaVotes() {
         $sql =
             "SELECT 
@@ -66,6 +68,7 @@ class DelegateBallot {
         return MAX_YEA_DELEGATE_BALLOTS - $count;
     }
 
+    // Check to see if a Ballot for a specific Vote has already been cast by a specific Delegate
     public function checkBallotExists($vote_id, $delegate_id): bool {
         $stmt = $this->pdo->prepare("SELECT 1 FROM delegate_ballots WHERE vote_id = :vote_id AND delegate_id = :delegate_id");
         $stmt->execute(['vote_id' => $vote_id, 'delegate_id' => $delegate_id]);
