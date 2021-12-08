@@ -46,7 +46,7 @@ body {
 
 .btn-lg {
     color: #fff;
-    text-shadow: none; /* Prevent inheritance from `body` */
+    text-shadow: none;
     background-color: #A41034;
     border: .05rem solid #333;
 }
