@@ -35,7 +35,7 @@
                         <a class="nav-link" href="delegates.php">Delegates</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="delegates.php">Caucuses</a>
+                        <a class="nav-link" href="caucuses.php">Caucuses</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
