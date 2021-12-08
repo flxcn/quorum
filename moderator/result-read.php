@@ -50,6 +50,7 @@ else {
     exit();
 }
 
+// Calculate Yea, Nay, and Abstain, and Nonvoting vote counts, for both Delegates and Caucuses
 $delegate_yea_count = $obj->countDelegateYeaVotes();
 $delegate_nay_count = $obj->countDelegateNayVotes();
 $delegate_abstain_count = $obj->countDelegateAbstainVotes();
@@ -121,6 +122,7 @@ $caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_na
     </div>
 
     <script>
+        // countdown timer of 5 seconds
         var duration = 5;
 
         var countDownDate = new Date(new Date().getTime() + duration * 1000);
@@ -144,6 +146,7 @@ $caucus_nonvoting_count = $caucus_present_count - $caucus_yea_count - $caucus_na
             }
         }, 1000);
 
+        // calculates whether a vote fails or passes
         function calculateOutcome() {
             var delegateYeaCount = parseInt(document.getElementById("delegateYeaCount").innerHTML);
             var delegateNayCount = parseInt(document.getElementById("delegateNayCount").innerHTML);
