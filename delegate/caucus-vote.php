@@ -82,12 +82,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <div class="container-fluid">
         <div class="row">
             <main class="ms-sm-auto px-md-4">
-                <div class="col-12 col-md-6 card mt-3 mx-auto border-primary">
+                <div class="col-12 col-md-6 card mt-3 mx-auto border-dark">
                     <h5 class="card-header">Vote as a Caucus!</h5>
                     <div class="card-body">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>"/>
-                            <select name="decision">
+                            <select name="decision" class="form-select">
                                 <option value="">Select option</option>
                                 <?php 
                                 if($obj->countRemainingYeaVotes($_SESSION["caucus_id"]) != 0) {
@@ -96,6 +96,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                                 ?>
                                 <option value="nay">Nay</option>
                             </select>
+                            <p class="text-muted my-3">Please only have one member cast a vote for your caucus.</p>
                             <p class="text-danger"><?php echo $error; ?></p>
                             <input type="submit" value="Vote!" class="btn btn-success"> 
                             <a href="dashboard.php" class="btn btn-outline-secondary">Go back</a>
