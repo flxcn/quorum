@@ -88,12 +88,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     <div class="container-fluid">
         <div class="row">
             <main class="ms-sm-auto px-md-4">
-                <div class="col-12 col-md-6 card mt-3 mx-auto border-primary">
+                <div class="col-12 col-md-6 card mt-3 mx-auto border-dark">
                     <h5 class="card-header">Vote!</h5>
                     <div class="card-body">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                             <input type="hidden" name="vote_id" value="<?php echo $vote_id; ?>"/>
-                            <select name="decision">
+                            <select name="decision" class="form-select">
                                 <option value="">Select option</option>
                                 <?php
                                 if($obj->countRemainingYeaVotes() != 0) {
